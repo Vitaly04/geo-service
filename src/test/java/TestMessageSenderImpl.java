@@ -14,16 +14,16 @@ import ru.netology.sender.MessageSenderImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestMain {
+public class TestMessageSenderImpl {
 
     @BeforeClass
     public GeoService setGeoService() {
-        GeoService geoService = new GeoServiceImpl();
-        return geoService;
+        return new GeoServiceImpl();
     }
+
+    @BeforeClass
     public LocalizationService setLocalizationService() {
-        LocalizationService localizationService = new LocalizationServiceImpl();
-        return localizationService;
+        return new LocalizationServiceImpl();
     }
 
     @Test
@@ -61,22 +61,6 @@ public class TestMain {
         Map<String, String> headers1 = new HashMap<String, String>();
         headers1.put(MessageSenderImpl.IP_ADDRESS_HEADER, "96.44.183.149");
         String expected = messageSender1.send(headers1);
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testByIp() {
-        final String ip = "172.8.0.23";
-        Location expected = new Location("Moscow", Country.RUSSIA, null, 0);
-        Location actual = setGeoService().byIp(ip);
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testLocale() {
-        final Country country = Country.USA;
-        String expected = "Welcome";
-        String actual = setLocalizationService().locale(country);
         Assertions.assertEquals(expected, actual);
     }
 }
